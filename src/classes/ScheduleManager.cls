@@ -16,9 +16,9 @@ public class ScheduleManager implements Schedulable {
 
     }
 
-    public ScheduleManager(String jobName, Executable executable) {
-        this.jobName = jobName;
+    public ScheduleManager(Executable executable) {
         this.executable = executable;
+        this.jobName = executable.getJobName();
     }
 
     public ScheduleManager(String jobName, String CRON_EXP) {
