@@ -14,6 +14,14 @@ Benefits
 
 Documentation
 -------------
+Executable
+----------
+void execute() - Contains logic that will be executed in schedule manager
+
+String getJobName() - Returns job name that will be scheduled
+
+ScheduleManager
+---------------
 void stop() - Stop all scheduled jobs based on job name
 
 void scheduleDailyAt(Integer) - Schedule daily at specific hour
@@ -72,6 +80,10 @@ global class BatchExample implements Database.Batchable<SObject>, Executable {
     global void execute() {
          Database.executeBatch(this);
     }
+    
+    global String getJobName() {
+        return <JOB_NAME>;
+    }
 
     global void finish(Database.BatchableContext BC) {
 
@@ -82,5 +94,5 @@ global class BatchExample implements Database.Batchable<SObject>, Executable {
 
 To schedule BatchExample class you just need to
 ```java
-   new ScheduleManager('BatchExample job', new AccountContactNullValuesBatch()).scheduleDailyAt(12); 
+   new ScheduleManager(new AccountContactNullValuesBatch()).scheduleDailyAt(12); 
 ```
