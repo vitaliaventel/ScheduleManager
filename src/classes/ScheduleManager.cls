@@ -97,6 +97,26 @@ public class ScheduleManager implements Schedulable {
     public void scheduleWithCron(String cronExpression) {
         System.schedule(jobName, cronExpression, this);
     }
+    
+     /**
+     * Method to schedule weekly at specific day
+     *
+     * @param dayNumber 1-7 the number before the # specifies weekday (SUN-SAT)
+     * @param timesPerMonth 1-5 the number after the # specifies the day of the month
+     */
+    public void scheduleWeekly(Integer dayNumber, Integer timesPerMonth, Integer shift){
+        if (dayNumber > 7 || dayNumber < 1) throw new InvalidCRONException('Invalid day number');
+        if (timesPerMonth > 5 || timesPerMonth < 0) throw new InvalidCRONException('Invalid times number');
+        String CRON_EXP = '0 0 23 ? * {0}#{1}';
+        Integer dayOfMonth = 1;
+        for(Integer i = 1; i <= timesPerMonth; i++){
+            System.schedule(jobName + ' ' + counter, String.format(CRON_EXP, new List<String>{
+                    String.valueOf(dayNumber), String.valueOf(dayOfMonth)
+            }), this);
+            dayOfMonth += shift;
+        }
+        return this;
+    }
 
     private class InvalidCRONException extends Exception {
     }
