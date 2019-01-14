@@ -24,13 +24,15 @@ ScheduleManager
 ---------------
 void stop() - Stop all scheduled jobs based on job name
 
-void scheduleDailyAt(Integer) - Schedule daily at specific hour
+ScheduleManager scheduleDailyAt(Integer) - Schedule daily at specific hour
 
-void scheduleDailyAt(Integer, String) - Schedule daily at specific hour and on specific day
+ScheduleManager scheduleDailyAt(Integer, String) - Schedule daily at specific hour and on specific day
 
-void scheduleEveryNMinutes(Integer) - Schedule daily every minute
+ScheduleManager scheduleEveryNMinutes(Integer) - Schedule daily every minute
 
-void scheduleWithCron(String) - Schedule based on cron expression
+ScheduleManager scheduleWithCron(String) - Schedule based on cron expression
+
+ScheduleManager scheduleWeekly(Integer, Integer, Integer) - Schedule based on specified weekday and day of the month
 
 Examples
 --------
