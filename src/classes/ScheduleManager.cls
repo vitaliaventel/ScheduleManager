@@ -49,12 +49,13 @@ public class ScheduleManager implements Schedulable {
      *
      * @param hour 0-23
      */
-    public void scheduleDailyAt(Integer hour) {
+    public ScheduleManager scheduleDailyAt(Integer hour) {
         if (hour > 23 || hour < 0) throw new InvalidCRONException('Invalid hours value');
         CRON_EXP = '0 0 {0} * * ?';
         System.schedule(jobName, String.format(CRON_EXP, new List<String>{
                 String.valueOf(hour)
         }), this);
+        return this;
     }
 
     /**
@@ -63,12 +64,13 @@ public class ScheduleManager implements Schedulable {
      * @param hour 0-23
      * @param days 1–7 or the following:1–7 or the following: SUN,MON,TUE,WED,THU,FRI,SAT
      */
-    public void scheduleDailyAt(Integer hour, String days) {
+    public ScheduleManager scheduleDailyAt(Integer hour, String days) {
         if (hour > 23 || hour < 0) throw new InvalidCRONException('Invalid hours value');
         CRON_EXP = '0 30 {0} ? * {1}';
         System.schedule(jobName, String.format(CRON_EXP, new List<String>{
                 String.valueOf(hour), days
         }), this);
+        return this;
     }
 
     /**
@@ -76,7 +78,7 @@ public class ScheduleManager implements Schedulable {
      *
      * @param minutes 0-59
      */
-    public void scheduleEveryNMinutes(Integer minutes) {
+    public ScheduleManager scheduleEveryNMinutes(Integer minutes) {
         if (minutes > 59 || minutes < 0) throw new InvalidCRONException('Invalid minutes value');
         CRON_EXP = '0 {0} * * * ?';
         Integer counter = Integer.valueOf(Math.roundToLong((Double) MINUTES_MAX / (Double) minutes));
@@ -87,6 +89,7 @@ public class ScheduleManager implements Schedulable {
             }), this);
             tempMinutes += minutes;
         }
+        return this;
     }
 
     /**
@@ -94,8 +97,9 @@ public class ScheduleManager implements Schedulable {
      *
      * @param cronExpression
      */
-    public void scheduleWithCron(String cronExpression) {
+    public ScheduleManager scheduleWithCron(String cronExpression) {
         System.schedule(jobName, cronExpression, this);
+        return this;
     }
     
      /**
@@ -104,7 +108,7 @@ public class ScheduleManager implements Schedulable {
      * @param dayNumber 1-7 the number before the # specifies weekday (SUN-SAT)
      * @param timesPerMonth 1-5 the number after the # specifies the day of the month
      */
-    public void scheduleWeekly(Integer dayNumber, Integer timesPerMonth, Integer shift){
+    public ScheduleManager scheduleWeekly(Integer dayNumber, Integer timesPerMonth, Integer shift){
         if (dayNumber > 7 || dayNumber < 1) throw new InvalidCRONException('Invalid day number');
         if (timesPerMonth > 5 || timesPerMonth < 0) throw new InvalidCRONException('Invalid times number');
         String CRON_EXP = '0 0 23 ? * {0}#{1}';
